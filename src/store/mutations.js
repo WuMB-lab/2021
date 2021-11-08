@@ -7,7 +7,6 @@ const { extraMenus = [] } = config;
 
 const mutations = {
   getMenuEnd: (state, payload) => {
-    console.log('extraMenus:', extraMenus);
     state.menus = mergeMenus(payload, extraMenus);
   },
   getUserInfoEnd: (state, payload) => {

@@ -30,10 +30,10 @@
     },
     computed:{
       layout(){
-        if(this.isRouterAlive){
-          console.log('this.$route.meta.layout:', this.$route.meta.layout);
-          console.log('config.globalSetting.layout:', config.globalSetting.layout);
-        }
+        // if(this.isRouterAlive){
+        //   console.log('this.$route.meta.layout:', this.$route.meta.layout);
+        //   console.log('config.globalSetting.layout:', config.globalSetting.layout);
+        // }
         return (this.$route.meta.layout || config.globalSetting.layout || 'sider-layout')
       }
     },

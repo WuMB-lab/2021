@@ -67,11 +67,7 @@ const GlobalMenus = {
   },
   computed: {
     ...mapState({
-      // menus: state => state.menus,
-      menus(state){
-        console.log('state:', state);
-        return state.menus;
-      },
+      menus: state => state.menus,
       layout: state => state.setting.layout,
       collapse: state => state.collapse
     }),
@@ -118,7 +114,6 @@ const GlobalMenus = {
         return arr;
       };
       if(this.menus && this.menus.length) {
-        console.log('i am in menus if');
         const arr = getMenus(this.menus);
         return arr;
       } else {
@@ -133,7 +128,6 @@ const GlobalMenus = {
       selectedKeys: this.selectedKeys,
       theme
     };
-    // console.log('menus:', this.menus)
     if (this.layout === 'sider-layout' && !this.collapse) {
       props.openKeys = this.openKeys;
     }

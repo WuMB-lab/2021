@@ -1,4 +1,4 @@
-import extraMenu from './extraMenu.json';
+import extraMenus from './extraMenu.json';
 
 const sggc = window.SinoGearGlobalConfig;
 const defaultConfig = {
@@ -8,7 +8,7 @@ const defaultConfig = {
   messageDuration: 2.5,
   massageMaxCount: 1,
   notificationDuration: 5,
-  extraMenu,
+  extraMenus,
   globalSetting: {
     layout: 'sider-layout',
     showBreadcrumb: false,

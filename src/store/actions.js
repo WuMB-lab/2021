@@ -6,7 +6,6 @@ import cloneDeep from 'lodash.clonedeep';
 
 const actions = {
   getMenus: async (context) => {
-    console.log('i am in action getMenus')
     let menus = [];
     context.commit('getMenuEnd', menus || []);
 	},

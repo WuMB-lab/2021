@@ -5,7 +5,7 @@ const state = {
   currentTab: 'HomeContainer',
   notices: [],
   fetchingNotices: false,
-  menus: [],
+  menus: config.extraMenus,
   subMenus: [],
   userAvatarKey: 'userAvatarKey',
   versionItem: null,
