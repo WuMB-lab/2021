@@ -1,0 +1,32 @@
+{
+  "name": "sg-mock",
+  "version": "0.1.0",
+  "description": "sg-mock",
+  "private": true,
+  "dependencies": {
+    "async": "^2.6.1",
+    "chokidar": "^2.0.4",
+    "cross-env": "^5.1.3",
+    "express": "^4.16.3",
+    "express-http-proxy": "^1.4.0",
+    "formidable": "^1.2.1",
+    "isobject": "^3.0.1",
+    "json-server": "^0.12.1",
+    "lodash.isarray": "^3.0.4",
+    "lodash.isfunction": "^3.0.9",
+    "mockjs": "^1.0.1-beta3",
+    "moment": "^2.22.2",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "sb-mock": "^1.0.0-beta.3"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "sb-mock -t ./",
+    "start": "sb-mock -t ./"
+  }
+}
