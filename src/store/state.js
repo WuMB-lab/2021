@@ -14,6 +14,10 @@ const state = {
   setting: {
     ...config.globalSetting
   },
+  currentUser: {
+    name: 'zhangsan',
+    key: '123'
+  },
   collapse: false,
   drawer: false
 };

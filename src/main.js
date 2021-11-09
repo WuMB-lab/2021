@@ -8,9 +8,14 @@ import router from './router'
 import './themes/index.less';
 import './themes/variables.less'
 import './resources/fonts/iconfont.css';
+import { message, Modal, Drawer, notification } from 'ant-design-vue';
 
+
+Vue.prototype.$message = message;
+Vue.prototype.$notification = notification;
 Vue.config.productionTip = false;
-
+Vue.use(Modal);
+Vue.use(Drawer);
 new Vue({
   router,
   store,
