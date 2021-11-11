@@ -1,4 +1,5 @@
 import { config } from '../common/config';
+import userImg from '../resources/images/user.jpg'
 
 const state = {
   tabs: [{ name: 'HomeContainer', title: '主页', fullPath: '/home', path: '/home' }],
@@ -7,6 +8,7 @@ const state = {
   fetchingNotices: false,
   menus: config.extraMenus,
   subMenus: [],
+  imageUrl: userImg,
   userAvatarKey: 'userAvatarKey',
   versionItem: null,
   validTokenSuccess: false,
@@ -15,7 +17,7 @@ const state = {
     ...config.globalSetting
   },
   currentUser: {
-    name: 'zhangsan',
+    username: 'guest',
     key: '123'
   },
   collapse: false,

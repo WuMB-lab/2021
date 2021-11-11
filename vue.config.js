@@ -8,6 +8,31 @@ const name = 'SinoGear';
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
 
+const options = {
+	antDir: path.join(__dirname, './node_modules/ant-design-vue'),
+	stylesDir: path.join(__dirname, './src/themes'),
+	varFile: path.join(__dirname, './src/themes/variables.less'),
+	mainLessFile: path.join(__dirname, './src/themes/default/index.less'),
+	themeVariables: [
+		'@primary-color',
+		'@sg-primary-color',
+		'@sg-left-top-logo-title-color',
+		'@sg-top-header-bg',
+		'@sg-header-right-content-color',
+		'@sg-global-menu-font-color',
+		'@sg-global-menu-bg',
+		'@sg-global-menu-item-selected-bg',
+		'@sg-global-menu-item-selected-border-right-color',
+		'@sg-global-menu-item-selected-font-color',
+		'@sg-global-menu-item-hover-font-color',
+		'@sg-global-menu-item-active-font-color',
+		'@sg-global-menu-sub-bg',
+		'@sg-sider-header-bg',
+		'@sg-header-bg',
+		'@sg-left-top-logo-bg'
+	]
+};
+
 const proxy = {
   '/api': {
     target: 'http://localhost:3005', // 需改为真实后端

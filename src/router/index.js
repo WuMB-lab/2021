@@ -14,14 +14,11 @@ const router = new Router({
   mode: 'hash'
 })
 
-// router.beforeEach(async (to, from, next) => {
-//   console.log('to: ', to);
-//   console.log('from: ', from);
-//   if (state.menus.length === 0) {
-//     await store.dispatch('getMenus');
-//   }
-//   next();
-// });
+// 起始地址和目的地址相同的情况，防止报错，设置一下内容
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err);
+};
 
 
 export default router;

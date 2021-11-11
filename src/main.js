@@ -9,6 +9,8 @@ import './themes/index.less';
 import './themes/variables.less'
 import './resources/fonts/iconfont.css';
 import { message, Modal, Drawer, notification } from 'ant-design-vue';
+import cssVars from 'css-vars-ponyfill';
+cssVars({ watch: true, silent: true });
 
 
 Vue.prototype.$message = message;

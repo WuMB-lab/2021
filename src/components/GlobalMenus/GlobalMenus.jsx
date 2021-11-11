@@ -101,7 +101,6 @@ const GlobalMenus = {
       return mapMenu;
     },
     getMenusPath() {
-      console.log('getMenusPath: ', this.menus);
       const getMenus = function (data, arr = []) {
         data.forEach((item) => {
           if (item.path || item.id) {

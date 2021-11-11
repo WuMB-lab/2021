@@ -1,6 +1,7 @@
 import extraMenus from './extraMenu.json';
+import defaultTheme from '../themes/index'
 
-const sggc = window.SinoGearGlobalConfig;
+const sggc = window.WMBGlobalConfig;
 const defaultConfig = {
   collapsed: false,
   name: 'SinoGear',
@@ -14,6 +15,7 @@ const defaultConfig = {
     showBreadcrumb: false,
     // 是否开启多标签页
     enableMultiTags: false,
+    themeConfig: defaultTheme
   },
   menusControl: [
     '/account/setting',

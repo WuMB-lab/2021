@@ -52,11 +52,20 @@
   import GlobalBreadcrumb from '../components/GlobalBreadcrumb/index.vue';
   import GlobalFooter from '../components/GlobalFooter/index.vue';
   import GlobalTagsView from '../components/GlobalTagsView/index.vue';
+  import { enquireScreen } from 'enquire-js'
   import { mapState, mapActions } from 'vuex';
+  import { router, getTitle } from '../utils/func';
   const ALayoutHeader = Layout.Header;
   const ALayoutFooter = Layout.Footer;
   const ALayoutSider = Layout.Sider;
   const ALayoutContent = Layout.Content;
+
+  let isMobile;
+  enquireScreen((b) => {
+    isMobile = !!b;
+  });
+
+  
   export default {
     name: "SiderLayout",
     components: {
@@ -73,20 +82,41 @@
     },
     computed: {
       ...mapState([
-        'setting', 'collapse', 'currentTab', 'tabs'
-      ])
+        'menus', 'tabs', 'currentTab', 'setting', 'collapse'
+      ]),
+      showView: function() {
+        return this.$route.path.indexOf('management') < 0;
+      },
+      transformMenus() {
+        const mapMenu = {};
+        const recursive = (list, nodePath, nameArr = []) => {
+          return list.map((item) => {
+            const { children: child, name } = item;
+            if (child && child.length) {
+              recursive(child, item.path, [...nameArr, name])
+            } else {
+              mapMenu[item.path] = [...nameArr, name];
+            }
+          });
+        };
+        recursive(this.menus);
+        return mapMenu;
+      }
     },
-    data () {
+    data: function() {
       return {
+        isRouterAlive: true,
+        exclude: null,
+        title: [],
+        routerData: [],
+        lastRoutePath: '',
+        isMobile: isMobile
       }
     },
     methods: {
       ...mapActions([
-        'changeCollapse'
+        'closeTabs', 'chooseTabs', 'addTabs', 'initTabs', 'closeAllTabs', 'closeOtherTabs', 'changeCollapse'
       ]),
-      handleChange: function(collapse) {
-        this.changeCollapse(collapse)
-      },
       handleCloseTabs(tab) {
         this.closeTabs(tab);
       },
@@ -125,6 +155,96 @@
           })
         }
       },
+      handleChange: function (collapse) {
+        this.changeCollapse(collapse)
+      }
+    },
+    created() {
+      enquireScreen((b) => {
+        this.isMobile = !!b;
+      })
+    },
+    mounted() {
+      const arr = this.$route.path.split('/');
+      let str = '';
+      this.routerData = router.getRoutes(this.$router.options.routes);
+      if (this.transformMenus[this.$route.fullPath]) {
+        this.title = this.transformMenus[this.$route.fullPath];
+      } else {
+        const newArr = [];
+        const nameArr = [];
+        if (arr && arr.length) {
+          for (let i = 1; i < arr.length; i += 1) {
+            str = `${str}/${arr[i]}`;
+            newArr.push(str);
+          }
+        }
+        newArr.forEach((item) => {
+          this.routerData.every((rItem) => {
+            if (rItem.path === item) {
+              const title = rItem.meta && rItem.meta.title ? rItem.meta.title : '';
+              if (title) {
+                nameArr.push(title);
+              }
+              return false;
+            }
+            return true;
+          });
+        });
+        this.title = nameArr;
+      }
+      let title = this.$route.meta.title;
+      if (this.menus && this.menus.length && !title) {
+        if (getTitle(this.menus, this.$route.fullPath)) {
+          title = getTitle(this.menus, this.$route.fullPath);
+        } else {
+          title = this.$route.path
+        }
+      } else if (!title) {
+        title = this.$route.fullPath;
+      }
+      this.addTabs({ title, name: this.$route.name, fullPath: this.$route.fullPath, path: this.$route.path });
+    },
+    watch: {
+      $route: function (newVal) {
+        if (this.transformMenus[newVal.fullPath]) {
+          this.title = this.transformMenus[newVal.fullPath];
+        } else {
+          const arr = newVal.path.split('/');
+          let str = '';
+          const newArr = [];
+          const nameArr = [];
+          if (arr && arr.length) {
+            for (let i = 1; i < arr.length; i += 1) {
+              str = `${str}/${arr[i]}`;
+              newArr.push(str);
+            }
+          }
+          newArr.forEach((item) => {
+            this.routerData.every((rItem) => {
+              if (rItem.path === item) {
+                const title = rItem.meta.title || '';
+                if (title) {
+                  nameArr.push(title);
+                }
+                return false;
+              }
+              return true;
+            });
+          });
+          this.title = nameArr;
+        }
+        let title = newVal.meta.title;
+        if (!title && getTitle(this.menus, newVal.fullPath)) {
+          title = getTitle(this.menus, newVal.fullPath);
+        } else if (!title) {
+          title = newVal.fullPath
+        }
+        this.addTabs({ title, name: newVal.name, fullPath: newVal.fullPath, path: this.$route.path });
+      },
+      'isMobile': function (newVal) {
+        this.changeCollapse(newVal);
+      }
     }
   }
 </script>
